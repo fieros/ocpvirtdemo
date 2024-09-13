@@ -41,9 +41,10 @@
               userData: |-
                 #cloud-config
                 user: cloud-user
+                password: demouser
                 ssh_authorized_keys:
-                - {{ ssh_key }}
-            name: cloudinit
+                - {{ ssh_pub }}
+            name: cloudinitdisk
   
   - name: Wait for virtual machine IP to be populated
     kubernetes.core.k8s_info:
