@@ -1,0 +1,57 @@
+- hosts: localhost
+  tasks:
+  - name: Create project
+    redhat.openshift.k8s:
+      state: present
+      definition:
+        apiVersion: project.openshift.io/v1
+        kind: Project
+        metadata:
+          name: virtdemo
+  
+  - name: Create RHEL virtual machine
+    redhat.openshift_virtualization.kubevirt_vm:
+      state: present
+      name: rheldemo
+      namespace: virtdemo
+      labels:
+        app: httpd
+      instancetype:
+        name: u1.medium
+      preference:
+        name: rhel.9
+      data_volume_templates:
+        - metadata:
+            name: rhel9virtdemo-volume
+          spec:
+            sourceRef:
+              kind: DataSource
+              name: rhel9
+              namespace: openshift-virtualization-os-images
+            storage:
+              resources: {}
+      spec:
+        domain:
+          devices: {}
+        volumes:
+          - dataVolume:
+              name: rhel9virtdemo-volume
+            name: rootdisk
+          - cloudInitNoCloud:
+              userData: |-
+                #cloud-config
+                user: cloud-user
+                ssh_authorized_keys:
+                - {{ ssh_key }}
+            name: cloudinit
+  
+  - name: Wait for virtual machine IP to be populated
+    kubernetes.core.k8s_info:
+      api_version: kubevirt.io/v1
+      kind: VirtualMachineInstance
+      name: rheldemo
+      namespace: virtdemo
+    register: vmi
+    retries: 60
+    delay: 10
+    until: (vmi.resources[0].status.interfaces[0]['ipAddress'] | default('')) | length > 0
