@@ -1,14 +1,5 @@
 - hosts: namespace_virtdemo
   tasks: 
-  - name: echo hostname
-    ansible.builtin.debug:
-      msg: "{{ ansible_hostname }}"
-
-  - name: echo whoami
-    ansible.builtin.debug:
-      msg: "{{ ansible_user }}"
-
-  
   - name: use subscription manager to register rhel host
     community.general.redhat_subscription:
       activationkey: "{{ activationkey }}"
