@@ -1,7 +1,16 @@
 - hosts: namespace_virtdemo
   tasks: 
-  - name: Register RHEL vm
-    redhat.rhel_system_roles.redhat_subscription:
-      activationkey: "{{ activationkey }}"
-      org_id: "{{ org_id }}"
-      state: present
+  - name: use subscription manager to register rhel host
+    ansible.builtin.command: subscription-manager register
+      --org {{ org_id }} 
+      --autosubscribe
+      --activationkey {{ activationkey }}
+    when: rhel_username is defined and rhel_password is defined and rhel_org_id is defined
+      and rhel_activation_key is defined
+
+  
+
+    # redhat.rhel_system_roles.redhat_subscription:
+    #   activationkey: "{{ activationkey }}"
+    #   org_id: "{{ org_id }}"
+    #   state: present
