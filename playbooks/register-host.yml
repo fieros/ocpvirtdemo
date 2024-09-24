@@ -1,8 +1,6 @@
 - hosts: namespace_virtdemo
   tasks: 
   - name: use subscription manager to register rhel host
-    
-  - name: rhel system role
     ansible.builtin.redhat_subscription:
       activationkey: 
       org_id: 
