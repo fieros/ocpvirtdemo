@@ -1,0 +1,6 @@
+---
+- name: Register RHEL vm
+  redhat_subscription:
+    activationkey: "{{ activationkey }}"
+    org_id: "{{ org_id }}"
+    state: present
