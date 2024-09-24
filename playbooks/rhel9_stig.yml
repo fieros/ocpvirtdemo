@@ -1,0 +1,4 @@
+- hosts: namespace_work
+  roles:
+    - { role: RedHatOfficial.rhel9_stig }
+  become: true
