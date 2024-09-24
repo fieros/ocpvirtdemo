@@ -8,3 +8,5 @@
       state: present
     become: true
     retries: 10
+    delay: 10
+    until: result.rc == 0
