@@ -1,7 +1,7 @@
 - hosts: namespace_virtdemo
   tasks: 
   - name: Register RHEL vm
-    redhat_subscription:
+    redhat.rhel_system_roles.redhat_subscription:
       activationkey: "{{ activationkey }}"
       org_id: "{{ org_id }}"
       state: present
