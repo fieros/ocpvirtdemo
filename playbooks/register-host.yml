@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: namespace_virtdemo
   tasks: 
   - name: echo hostname
     ansible.builtin.debug:
