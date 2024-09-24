@@ -34,6 +34,7 @@
       spec:
         domain:
           devices: {}
+        subdomain: headless
         volumes:
           - dataVolume:
               name: rhel9virtdemo-volume
