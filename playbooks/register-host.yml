@@ -4,5 +4,6 @@
     community.general.redhat_subscription:
       activationkey: "{{ activationkey }}"
       org_id: "{{ org_id }}"
+      auto_attach: true
       state: present
     become: true
