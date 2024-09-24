@@ -7,3 +7,4 @@
       auto_attach: true
       state: present
     become: true
+    retries: 10
