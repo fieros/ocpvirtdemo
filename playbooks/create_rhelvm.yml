@@ -16,6 +16,7 @@
       namespace: virtdemo
       labels:
         app: httpd
+        network.kubevirt.io/headlessService: headless
       instancetype:
         name: u1.medium
       preference:
