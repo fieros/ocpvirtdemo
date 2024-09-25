@@ -1,10 +1,15 @@
 - hosts: namespace_virtdemo
   tasks: 
   - name: use subscription manager to register rhel host
-    community.general.redhat_subscription:
-      activationkey: "{{ activationkey }}"
-      org_id: "{{ org_id }}"
-      auto_attach: true
-      state: present
+    ansible.builtin.command: subscription-manager register
+      --org {{ org_id }} 
+      --autosubscribe
+      --activationkey {{ activationkey }}
+    # community.general.redhat_subscription:
+    #   activationkey: "{{ activationkey }}"
+    #   org_id: "{{ org_id }}"
+    #   auto_attach: true
+    #   state: present
+
     become: true
 
