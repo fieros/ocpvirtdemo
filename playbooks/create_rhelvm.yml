@@ -12,7 +12,7 @@
   - name: Create RHEL virtual machine
     redhat.openshift_virtualization.kubevirt_vm:
       state: present
-      name: rheldemo
+      name: rheldemo{{ item }}
       namespace: virtdemo
       labels:
         app: httpd
@@ -23,7 +23,7 @@
         name: rhel.9
       data_volume_templates:
         - metadata:
-            name: rhel9virtdemo-volume
+            name: rhel9virtdemo-volume{{ item }}
           spec:
             sourceRef:
               kind: DataSource
@@ -37,7 +37,7 @@
         subdomain: headless
         volumes:
           - dataVolume:
-              name: rhel9virtdemo-volume
+              name: rhel9virtdemo-volume{{ item }}
             name: rootdisk
           - cloudInitNoCloud:
               userData: |-
@@ -49,6 +49,7 @@
                 ssh_authorized_keys:
                 - {{ ssh_pub }}
             name: cloudinitdisk
+      loop: "{{ range(vm_count) | list }}"
   
   - name: Wait for virtual machine IP to be populated
     kubernetes.core.k8s_info:
