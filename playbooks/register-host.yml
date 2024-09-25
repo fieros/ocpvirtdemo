@@ -7,7 +7,7 @@
     community.general.redhat_subscription:
       activationkey: "{{ activationkey }}"
       org_id: "{{ org_id }}"
-      pool: "^Red Hat Enterprise Linux Server$"
+      pool_ids: {{ pool_id }}
       state: present
     become: true
 
