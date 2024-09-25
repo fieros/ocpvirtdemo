@@ -44,6 +44,8 @@
                 #cloud-config
                 user: cloud-user
                 password: demouser
+                chpasswd:
+                  expire: false
                 ssh_authorized_keys:
                 - {{ ssh_pub }}
             name: cloudinitdisk
