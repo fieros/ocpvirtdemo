@@ -49,7 +49,7 @@
                 ssh_authorized_keys:
                 - {{ ssh_pub }}
             name: cloudinitdisk
-      loop: "{{ range(vm_count) | list }}"
+    loop: "{{ range(vm_count) | list }}"
   
   - name: Wait for virtual machine IP to be populated
     kubernetes.core.k8s_info:
