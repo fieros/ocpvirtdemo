@@ -49,13 +49,13 @@
                 ssh_authorized_keys:
                 - {{ ssh_pub }}
             name: cloudinitdisk
-    loop: "{{ range(vm_count) | list }}"
+    loop: "{{ range(vm_count | int) | list }}"
   
-  - name: Wait for virtual machine IP to be populated
+  - name: Wait for last virtual machine IP to be populated
     kubernetes.core.k8s_info:
       api_version: kubevirt.io/v1
       kind: VirtualMachineInstance
-      name: rheldemo
+      name: rheldemo{{ (vm_count | int)-1  }}
       namespace: virtdemo
     register: vmi
     retries: 60
