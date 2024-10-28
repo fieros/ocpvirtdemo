@@ -4,3 +4,4 @@ collections:
 - name: kubernetes.core
 - name: redhat.rhel_system_roles
 - name: community.general
+- name: RedHatOfficial.rhel9_stig
