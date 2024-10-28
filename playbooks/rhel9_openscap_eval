@@ -1,0 +1,16 @@
+---
+- name: Run OpenSCAP Compliance Check
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Evaluate system against HIPAA profile
+      command: >
+        oscap xccdf eval --profile hipaa 
+        --results /tmp/hipaa-results.xml 
+        --report /tmp/hipaa-report.html 
+        /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml
+      register: eval_output
+
+    - name: Display evaluation output
+      debug:
+        var: eval_output.stdout_lines
