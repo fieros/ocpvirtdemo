@@ -1,4 +1,4 @@
-- hosts: namespace_work
+- hosts: namespace_virtdemo
   roles:
     - { role: RedHatOfficial.rhel9_stig }
   become: true
