@@ -1,0 +1,28 @@
+---
+- name: Install and Run OpenSCAP Compliance Check
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Install OpenSCAP 
+      command: >
+        yum install -y httpd openscap-scanner scap-security-guide
+
+    - name: Evaluate system against DISA STIG profile with OpenSCAP
+      command: >
+        oscap xccdf eval --fetch-remote-resources 
+        --profile xccdf_org.ssgproject.content_profile_stig 
+        --results /tmp/scan-xccdf-results.xml 
+        /usr/share/xml/scap/ssg/content/ssg-rhel9-stig.xml
+      register: eval_output
+
+    - name: Display evaluation output
+      debug:
+        var: eval_output.stdout_lines
+
+    - name: Generate Report - DISA STIG with OpenSCAP
+      command: >
+        oscap xccdf generate report /tmp/scan-xccdf-results.xml > /var/www/html/index.html
+  
+    - name: Display remediation playbook path
+      debug:
+        msg: "Evaluation output generated at /var/www/html/index.html"
